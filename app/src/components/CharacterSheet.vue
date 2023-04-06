@@ -1,6 +1,7 @@
 <template>
   <b-container fluid class="character-sheet">
-    <StatsBar :stats="characterStats" />
+    <b-button @click="editing = !editing">Toggle Edit</b-button>
+    <StatsBar :editing="editing" :stats="characterStats" />
   </b-container>
 </template>
 
@@ -11,6 +12,11 @@ export default {
   name: "character-sheet",
   components: {
     StatsBar,
+  },
+  data() {
+    return {
+      editing: false,
+    };
   },
   computed: {
     characterStats() {

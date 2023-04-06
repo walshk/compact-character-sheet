@@ -108,7 +108,7 @@ let store = new Vuex.Store({
   getters: {
     characterStats(state) {
       const prof_bonus = state.character_info.prof_bonus;
-      const stats = Object.assign({}, state.stats);
+      const stats = structuredClone(state.stats);
 
       const stat_names = Object.keys(stats);
       for (let i = 0; i < stat_names.length; i++) {
@@ -139,10 +139,25 @@ let store = new Vuex.Store({
         this.replaceState(Object.assign(state, JSON.parse(existingStore)));
       }
     },
+    updateStatModifier(state, payload) {
+      const { statName, value } = payload;
+
+      state.stats[statName].modifier = value;
+    },
+    updateAbilityProficiency(state, payload) {
+      const { statName, abilityName, value } = payload;
+      state.stats[statName].proficiencies[abilityName] = value;
+    },
   },
   actions: {
     initStore(context) {
       context.commit("initStore");
+    },
+    updateStatModifier(context, payload) {
+      context.commit("updateStatModifier", payload);
+    },
+    updateAbilityProficiency(context, payload) {
+      context.commit("updateAbilityProficiency", payload);
     },
   },
   modules: {},

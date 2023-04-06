@@ -2,3 +2,7 @@
     --primary-bg-color: #202020;
     --primary-text-color: #FFF;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}

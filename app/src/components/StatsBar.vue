@@ -3,39 +3,85 @@
     <b-row>
       <b-col class="stat-col" v-for="statKey in statsKeys" :key="statKey">
         <b-row class="">
+          <b-col></b-col>
           <b-col>
             <h3>{{ statKey.toUpperCase() }}</h3>
           </b-col>
+          <b-col>
+            <b-icon-chevron-down
+              @click="toggleCollapse(`collapse-stat`)"
+              class="clickable"
+            />
+          </b-col>
         </b-row>
         <b-row>
-          <b-col class="stat-modifier">
+          <b-col v-if="editing">
+            <b-input
+              type="number"
+              :value="stats[statKey].modifier"
+              @input="(newValue) => updateModifier(statKey, newValue)"
+              style="text-align: center"
+            ></b-input>
+          </b-col>
+          <b-col v-else class="stat-modifier">
             {{ stats[statKey].modifier >= 0 ? "+" : "-"
             }}{{ stats[statKey].modifier }}
           </b-col>
         </b-row>
-        <b-row
-          v-for="ability in Object.keys(stats[statKey].proficiencies)"
-          :key="ability"
-          class="ability-info"
-        >
-          <b-col style="margin-right: 0.5rem" cols="1">
-            {{ stats[statKey].proficiencies[ability] >= 0 ? "+" : "-"
-            }}{{ stats[statKey].proficiencies[ability] }}
-          </b-col>
-          <b-col style="padding-left: 0" cols="auto">
-            {{ ability.replaceAll("_", " ").toUpperCase() }}
-          </b-col>
-        </b-row>
+        <b-collapse id="collapse-stat">
+          <b-row
+            v-for="ability in Object.keys(stats[statKey].proficiencies)"
+            :key="ability"
+            class="ability-info"
+          >
+            <AbilityScore
+              :stats="stats"
+              :statKey="statKey"
+              :ability="ability"
+              :editing="editing"
+            />
+          </b-row>
+        </b-collapse>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import AbilityScore from "@/components/AbilityScore.vue";
+
 export default {
   name: "stats-bar",
+  components: {
+    AbilityScore,
+  },
   props: {
     stats: Object,
+    editing: Boolean,
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    getAbilityProficiency(statName, abilityName) {
+      return this.$store.state.stats[statName].proficiencies[abilityName];
+    },
+    updateProficiency(statName, abilityName, value) {
+      this.$store.dispatch("updateAbilityProficiency", {
+        statName,
+        abilityName,
+        value,
+      });
+    },
+    updateModifier(statName, value) {
+      this.$store.dispatch("updateStatModifier", {
+        statName,
+        value: Number(value),
+      });
+    },
+    toggleCollapse(collapseId) {
+      this.$root.$emit("bv::toggle::collapse", collapseId);
+    },
   },
   computed: {
     statsKeys() {
@@ -52,6 +98,7 @@ export default {
 }
 
 .stat-col {
+  background-color: #303030;
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.5rem 0.5rem;

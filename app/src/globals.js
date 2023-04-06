@@ -1,7 +1,7 @@
 const PROFICIENCY = {
-  NOT_PROFICIENT: Symbol(0),
-  PROFICIENT: Symbol(1),
-  EXPERTISE: Symbol(2),
+  NOT_PROFICIENT: "not_proficient",
+  PROFICIENT: "proficient",
+  EXPERTISE: "expertise",
 };
 
 module.exports = { PROFICIENCY };

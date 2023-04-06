@@ -12,6 +12,9 @@ export default {
   components: {
     CharacterSheet,
   },
+  created() {
+    this.$store.dispatch("initStore");
+  },
 };
 </script>
 
