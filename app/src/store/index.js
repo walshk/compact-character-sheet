@@ -9,13 +9,14 @@ import { PROFICIENCY } from "@/globals";
 let store = new Vuex.Store({
   state: {
     character_info: {
-      name: "",
-      race: "",
-      class: "",
-      level: 0,
+      name: "Ensis Caelum",
+      race: "Scourge Aasimar",
+      class: "Sorcerer/Warlock",
+      level: 6,
       prof_bonus: 3,
-      languages: "",
+      languages: "Common, Celestial",
       proficiencies: "",
+      inspiration: 1,
     },
     stats: {
       str: {

@@ -5,7 +5,7 @@
         <b-row class="">
           <b-col></b-col>
           <b-col>
-            <h3>{{ statKey.toUpperCase() }}</h3>
+            <h5>{{ statKey.toUpperCase() }}</h5>
           </b-col>
           <b-col>
             <b-icon-chevron-down
@@ -24,7 +24,7 @@
             ></b-input>
           </b-col>
           <b-col v-else class="stat-modifier">
-            {{ stats[statKey].modifier >= 0 ? "+" : "-"
+            {{ stats[statKey].modifier >= 0 ? "+" : ""
             }}{{ stats[statKey].modifier }}
           </b-col>
         </b-row>

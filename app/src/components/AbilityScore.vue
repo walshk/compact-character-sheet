@@ -7,7 +7,7 @@
       ></b-form-select>
     </b-col>
     <b-col v-else style="margin-right: 1rem" cols="1">
-      {{ stats[statKey].proficiencies[ability] >= 0 ? "+" : "-"
+      {{ stats[statKey].proficiencies[ability] >= 0 ? "+" : ""
       }}{{ stats[statKey].proficiencies[ability] }}
     </b-col>
     <b-col style="padding: 0; text-align: left">
