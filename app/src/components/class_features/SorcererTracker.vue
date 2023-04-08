@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      showSorcery: true,
+      showSorcery: false,
     };
   },
   computed: {

@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      showPactMagic: true,
+      showPactMagic: false,
     };
   },
   computed: {

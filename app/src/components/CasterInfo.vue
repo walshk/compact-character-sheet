@@ -3,7 +3,7 @@
     <b-row class="clickable" @click="showCasterInfo = !showCasterInfo">
       <b-col></b-col>
       <b-col style="text-align: center">
-        <h5 style="margin-bottom: 0">Spellcaster</h5>
+        <h5 style="margin-bottom: 0">Spell Modifiers</h5>
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      showCasterInfo: true,
+      showCasterInfo: false,
     };
   },
   computed: {

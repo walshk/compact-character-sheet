@@ -30,9 +30,35 @@
           <SorcererTracker :editing="editing" />
         </b-row>
       </b-col>
-      <b-col>
+      <b-col style="padding-left: 1rem">
         <b-tabs pills>
-          <b-tab title="Combat"></b-tab>
+          <b-tab title="Combat">
+            <b-row style="margin-top: 0.5rem">
+              <AttacksInfo :editing="editing" />
+            </b-row>
+            <b-row style="margin-top: 0.5rem">
+              <SpellsInfo :editing="editing" />
+            </b-row>
+          </b-tab>
+          <b-tab title="Features">
+            <b-row
+              style="margin-top: 0.5rem"
+              v-for="featureIndex in features"
+              :key="`feature-${featureIndex}`"
+            >
+              <FeatureInfo :featureIndex="featureIndex" :editing="editing" />
+            </b-row>
+            <b-row
+              v-if="editing"
+              style="text-align: center; margin-top: 0.5rem"
+            >
+              <b-col>
+                <span class="clickable" @click="addNewFeature"
+                  >+ New Feature</span
+                >
+              </b-col>
+            </b-row>
+          </b-tab>
           <b-tab title="Inventory"></b-tab>
         </b-tabs>
       </b-col>
@@ -48,6 +74,9 @@ import CasterInfo from "@/components/CasterInfo.vue";
 import SorcererTracker from "@/components/class_features/SorcererTracker.vue";
 import PactMagicTracker from "@/components/class_features/PactMagicTracker.vue";
 import SpellSlotsTracker from "@/components/class_features/SpellSlotsTracker.vue";
+import AttacksInfo from "@/components/user_addons/AttacksInfo.vue";
+import SpellsInfo from "@/components/user_addons/SpellsInfo.vue";
+import FeatureInfo from "@/components/user_addons/FeatureInfo.vue";
 
 export default {
   name: "character-sheet",
@@ -59,11 +88,19 @@ export default {
     SorcererTracker,
     PactMagicTracker,
     SpellSlotsTracker,
+    AttacksInfo,
+    SpellsInfo,
+    FeatureInfo,
   },
   data() {
     return {
       editing: false,
     };
+  },
+  methods: {
+    addNewFeature() {
+      this.$store.dispatch("addNewFeature");
+    },
   },
   computed: {
     characterStats() {
@@ -86,6 +123,12 @@ export default {
         this.class.includes("bard") ||
         this.class.includes("druid")
       );
+    },
+    featuresObject() {
+      return this.$store.state.features;
+    },
+    features() {
+      return Object.keys(this.featuresObject);
     },
   },
 };

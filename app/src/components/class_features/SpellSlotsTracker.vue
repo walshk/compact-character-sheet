@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      showSpellSlots: true,
+      showSpellSlots: false,
     };
   },
   methods: {

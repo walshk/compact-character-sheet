@@ -82,6 +82,20 @@ let store = new Vuex.Store({
       hp_temp: 12,
       death_save_successes: 0,
       death_save_failures: 0,
+      attacks: {
+        0: {
+          name: "Test Attack",
+          bonus: 9,
+          damage: "1d10+5 force",
+        },
+      },
+      spells: {
+        0: {
+          level: "1",
+          name: "Test Spell",
+          prepared: true,
+        },
+      },
     },
     caster: {
       spell_atk: 8,
@@ -150,12 +164,13 @@ let store = new Vuex.Store({
         description: "Description for Test Item",
       },
     ],
-    features: [
-      {
+    features: {
+      0: {
         name: "Test Feature",
+        description: "Description for test feature",
         consumed: false,
       },
-    ],
+    },
     money: {
       cp: 0,
       ep: 0,
@@ -223,6 +238,72 @@ let store = new Vuex.Store({
       const { key, value } = payload;
       state.caster[key] = value;
     },
+    updateAttack(state, payload) {
+      const { index, key, value } = payload;
+      state.combat.attacks[index][key] = value;
+    },
+    addNewAttack(state) {
+      const existingKeys = Object.keys(state.combat.attacks).map(Number);
+      let newKey = 0;
+      for (let i = 0; i < existingKeys.length; i++) {
+        if (existingKeys[i] == newKey) {
+          newKey += 1;
+        }
+      }
+
+      Vue.set(state.combat.attacks, newKey, {
+        name: "",
+        bonus: 0,
+        damage: "",
+      });
+    },
+    deleteAttack(state, index) {
+      Vue.delete(state.combat.attacks, index);
+    },
+    updateSpell(state, payload) {
+      const { index, key, value } = payload;
+      state.combat.spells[index][key] = value;
+    },
+    addNewSpell(state) {
+      const existingKeys = Object.keys(state.combat.spells).map(Number);
+      let newKey = 0;
+      for (let i = 0; i < existingKeys.length; i++) {
+        if (existingKeys[i] == newKey) {
+          newKey += 1;
+        }
+      }
+
+      Vue.set(state.combat.spells, newKey, {
+        level: 0,
+        name: "",
+        ritual: "no",
+      });
+    },
+    deleteSpell(state, index) {
+      Vue.delete(state.combat.spells, index);
+    },
+    updateFeature(state, payload) {
+      const { index, key, value } = payload;
+      state.features[index][key] = value;
+    },
+    addNewFeature(state) {
+      const existingKeys = Object.keys(state.features).map(Number);
+      let newKey = 0;
+      for (let i = 0; i < existingKeys.length; i++) {
+        if (existingKeys[i] == newKey) {
+          newKey += 1;
+        }
+      }
+
+      Vue.set(state.features, newKey, {
+        name: "",
+        consumed: false,
+        description: "",
+      });
+    },
+    deleteFeature(state, index) {
+      Vue.delete(state.features, index);
+    },
   },
   actions: {
     initStore(context) {
@@ -245,6 +326,33 @@ let store = new Vuex.Store({
     },
     updateCasterInfoByKey(context, payload) {
       context.commit("updateCasterInfoByKey", payload);
+    },
+    updateAttack(context, payload) {
+      context.commit("updateAttack", payload);
+    },
+    addNewAttack(context) {
+      context.commit("addNewAttack");
+    },
+    deleteAttack(context, index) {
+      context.commit("deleteAttack", index);
+    },
+    updateSpell(context, payload) {
+      context.commit("updateSpell", payload);
+    },
+    addNewSpell(context) {
+      context.commit("addNewSpell");
+    },
+    deleteSpell(context, index) {
+      context.commit("deleteSpell", index);
+    },
+    updateFeature(context, payload) {
+      context.commit("updateFeature", payload);
+    },
+    addNewFeature(context) {
+      context.commit("addNewFeature");
+    },
+    deleteFeature(context, index) {
+      context.commit("deleteFeature", index);
     },
   },
   modules: {},
