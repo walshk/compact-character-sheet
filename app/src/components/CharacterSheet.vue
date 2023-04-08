@@ -103,7 +103,7 @@ export default {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: black !important;
-  background-color: white;
+  background-color: white !important;
 }
 
 .nav-link {
