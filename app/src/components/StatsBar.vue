@@ -98,7 +98,7 @@ export default {
 }
 
 .stat-col {
-  background-color: #303030;
+  background-color: var(--foreground-bg-color);
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.5rem 0.5rem;

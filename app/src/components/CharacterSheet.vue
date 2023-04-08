@@ -1,14 +1,28 @@
 <template>
   <b-container fluid class="character-sheet">
     <b-button @click="editing = !editing">Toggle Edit</b-button>
-    <b-row>
+    <b-row class="section">
       <b-col>
         <CharacterInfo :editing="editing" />
       </b-col>
     </b-row>
-    <b-row style="margin-top: 1rem">
+    <b-row class="section">
       <b-col>
         <StatsBar :editing="editing" :stats="characterStats" />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="6">
+        <b-row>
+          <CombatInfo :editing="editing" />
+        </b-row>
+        <b-row style="margin-top: 0.5rem">
+          <CasterInfo :editing="editing" />
+        </b-row>
+        <!-- OPTIONAL SPELLCASTER TRACKING ROWS -->
+        <b-row style="margin-top: 0.5rem" v-if="hasSorceryPoints">
+          <SorcererTracker :editing="editing" />
+        </b-row>
       </b-col>
     </b-row>
   </b-container>
@@ -17,12 +31,18 @@
 <script>
 import StatsBar from "@/components/StatsBar.vue";
 import CharacterInfo from "@/components/CharacterInfo.vue";
+import CombatInfo from "@/components/CombatInfo.vue";
+import CasterInfo from "@/components/CasterInfo.vue";
+import SorcererTracker from "@/components/class_features/SorcererTracker.vue";
 
 export default {
   name: "character-sheet",
   components: {
     StatsBar,
     CharacterInfo,
+    CombatInfo,
+    CasterInfo,
+    SorcererTracker,
   },
   data() {
     return {
@@ -33,6 +53,24 @@ export default {
     characterStats() {
       return this.$store.getters.characterStats;
     },
+    class() {
+      return this.$store.state.character_info.class.toLowerCase();
+    },
+    hasSorceryPoints() {
+      return this.class.includes("sorcerer");
+    },
+    hasPactMagic() {
+      return this.class.includes("warlock");
+    },
+    hasSpellSlots() {
+      return (
+        this.class.includes("sorcerer") ||
+        this.class.includes("wizard") ||
+        this.class.includes("cleric") ||
+        this.class.includes("bard") ||
+        this.class.includes("druid")
+      );
+    },
   },
 };
 </script>
@@ -40,5 +78,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .character-sheet {
+}
+
+.section {
+  margin-bottom: 0.5rem;
 }
 </style>

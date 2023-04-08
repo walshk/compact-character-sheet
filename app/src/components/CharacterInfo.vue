@@ -15,7 +15,7 @@
       <b-col class="highlight-info">
         <div>Proficiency Bonus</div>
         <div>
-          <h5>{{ charInfo.prof_bonus }}</h5>
+          <h5>+{{ charInfo.prof_bonus }}</h5>
         </div>
       </b-col>
       <b-col class="highlight-info">

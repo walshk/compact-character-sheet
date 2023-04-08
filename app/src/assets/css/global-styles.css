@@ -1,8 +1,13 @@
 :root {
     --primary-bg-color: #202020;
     --primary-text-color: #FFF;
+    --foreground-bg-color: #303030;
 }
 
 .clickable:hover {
     cursor: pointer;
+}
+
+.largeText {
+    font-size: 1.5rem;
 }

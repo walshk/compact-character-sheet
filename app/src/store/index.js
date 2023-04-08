@@ -75,16 +75,53 @@ let store = new Vuex.Store({
       },
     },
     combat: {
-      initiative: 0,
-      armor_class: 0,
-      speed: "",
-      hp_max: 0,
-      hp_current: 0,
-      hp_temp: 0,
-      spell_atk: 0,
-      spell_save: 0,
+      armor_class: 19,
+      speed: "30ft",
+      hp_max: 59,
+      hp_current: 55,
+      hp_temp: 12,
       death_save_successes: 0,
       death_save_failures: 0,
+    },
+    caster: {
+      spell_atk: 8,
+      spell_save: 16,
+      trackers: [],
+    },
+    class_features: {
+      sorcerer: {
+        points_available: 4,
+        points_total: 6,
+        metamagics: "Quicken, Twinned, Subtle",
+      },
+      pact_magic: {
+        level: 3,
+        slots_used: 0,
+        slots_total: 2,
+      },
+      spell_slots: {
+        1: {
+          0: false,
+          1: false,
+          2: false,
+          3: false,
+        },
+        2: {
+          0: false,
+          1: false,
+          2: false,
+        },
+        3: {
+          0: false,
+          1: false,
+          2: false,
+        },
+        4: {
+          0: false,
+          1: false,
+          2: false,
+        },
+      },
     },
     inventory: [
       {
@@ -149,6 +186,10 @@ let store = new Vuex.Store({
       const { statName, abilityName, value } = payload;
       state.stats[statName].proficiencies[abilityName] = value;
     },
+    updateCombatInfoByKey(state, payload) {
+      const { key, newValue } = payload;
+      state.combat[key] = newValue;
+    },
   },
   actions: {
     initStore(context) {
@@ -159,6 +200,9 @@ let store = new Vuex.Store({
     },
     updateAbilityProficiency(context, payload) {
       context.commit("updateAbilityProficiency", payload);
+    },
+    updateCombatInfoByKey(context, payload) {
+      context.commit("updateCombatInfoByKey", payload);
     },
   },
   modules: {},
