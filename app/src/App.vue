@@ -22,11 +22,13 @@ export default {
 html,
 body {
   height: 100%;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
 }
 
 #app {
+  height: 100%;
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  height: 100%;
 }
 </style>

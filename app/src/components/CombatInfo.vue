@@ -7,11 +7,7 @@
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
-    <b-collapse
-      style="margin-top: 1rem"
-      v-model="showCombatInfo"
-      id="combatInfoCollapse"
-    >
+    <b-collapse v-model="showCombatInfo" id="combatInfoCollapse">
       <b-row>
         <b-col class="combat-section">
           <b-row>

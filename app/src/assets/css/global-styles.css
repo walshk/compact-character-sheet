@@ -11,3 +11,7 @@
 .largeText {
     font-size: 1.5rem;
 }
+
+input {
+    text-align: center;
+}

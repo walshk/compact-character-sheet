@@ -1,60 +1,60 @@
 <template>
-  <b-col class="sorcerer-tracker">
-    <b-row class="clickable" @click="showSorcery = !showSorcery">
+  <b-col class="pact-magic-tracker">
+    <b-row class="clickable" @click="showPactMagic = !showPactMagic">
       <b-col></b-col>
       <b-col style="text-align: center">
-        <h5 style="margin-bottom: 0">Sorcerer</h5>
+        <h5 style="margin-bottom: 0">Pact Magic</h5>
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
-    <b-collapse v-model="showSorcery">
+    <b-collapse v-model="showPactMagic">
       <b-row>
         <b-col>
           <b-row>
             <b-col>
-              <h5>Sorcery Points Used</h5>
+              <h5>Spell Slots Used</h5>
             </b-col>
           </b-row>
           <b-row>
             <b-col v-if="editing">
               <span
-                ><b-input type="number" v-model="sorcPointsUsed"></b-input
+                ><b-input type="number" v-model="pactSlotsUsed"></b-input
               ></span>
             </b-col>
             <b-col v-else class="largeText">
-              {{ sorcPointsUsed }}
+              {{ pactSlotsUsed }}
             </b-col>
           </b-row>
         </b-col>
         <b-col>
           <b-row>
             <b-col>
-              <h5>Sorcery Points Total</h5>
+              <h5>Spell Slots Total</h5>
             </b-col>
           </b-row>
           <b-row>
             <b-col v-if="editing">
               <span
-                ><b-input type="number" v-model="sorcPointsTotal"></b-input
+                ><b-input type="number" v-model="pactSlotsTotal"></b-input
               ></span>
             </b-col>
             <b-col v-else class="largeText">
-              {{ sorcPointsTotal }}
+              {{ pactSlotsTotal }}
             </b-col>
           </b-row>
         </b-col>
         <b-col>
           <b-row>
             <b-col>
-              <h5>Metamagics</h5>
+              <h5>Spell Level</h5>
             </b-col>
           </b-row>
           <b-row>
             <b-col v-if="editing">
-              <span><b-input v-model="metamagics"></b-input></span>
+              <span><b-input type="number" v-model="pactLevel"></b-input></span>
             </b-col>
-            <b-col v-else>
-              <span>{{ metamagics }}</span>
+            <b-col v-else class="largeText">
+              <span>{{ pactLevel }}</span>
             </b-col>
           </b-row>
         </b-col>
@@ -65,49 +65,49 @@
 
 <script>
 export default {
-  name: "sorcerer-tracker",
+  name: "pact-magic-tracker",
   components: {},
   props: {
     editing: Boolean,
   },
   data() {
     return {
-      showSorcery: true,
+      showPactMagic: true,
     };
   },
   computed: {
-    sorcPointsUsed: {
+    pactSlotsUsed: {
       get() {
-        return this.$store.state.class_features.sorcerer.points_used;
+        return this.$store.state.class_features.pact_magic.slots_used;
       },
       set(value) {
         this.$store.dispatch("updateClassFeatureValue", {
-          feature: "sorcerer",
-          key: "points_used",
+          feature: "pact_magic",
+          key: "slots_used",
           value,
         });
       },
     },
-    sorcPointsTotal: {
+    pactSlotsTotal: {
       get() {
-        return this.$store.state.class_features.sorcerer.points_total;
+        return this.$store.state.class_features.pact_magic.slots_total;
       },
       set(value) {
         this.$store.dispatch("updateClassFeatureValue", {
-          feature: "sorcerer",
-          key: "points_total",
+          feature: "pact_magic",
+          key: "slots_total",
           value,
         });
       },
     },
-    metamagics: {
+    pactLevel: {
       get() {
-        return this.$store.state.class_features.sorcerer.metamagics;
+        return this.$store.state.class_features.pact_magic.level;
       },
       set(value) {
         this.$store.dispatch("updateClassFeatureValue", {
-          feature: "sorcerer",
-          key: "metamagics",
+          feature: "pact_magic",
+          key: "level",
           value,
         });
       },
@@ -118,7 +118,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sorcerer-tracker {
+.pact-magic-tracker {
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;

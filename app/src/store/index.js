@@ -90,7 +90,7 @@ let store = new Vuex.Store({
     },
     class_features: {
       sorcerer: {
-        points_available: 4,
+        points_used: 2,
         points_total: 6,
         metamagics: "Quicken, Twinned, Subtle",
       },
@@ -100,26 +100,45 @@ let store = new Vuex.Store({
         slots_total: 2,
       },
       spell_slots: {
-        1: {
+        "1st": {
           0: false,
           1: false,
           2: false,
           3: false,
         },
-        2: {
+        "2nd": {
           0: false,
           1: false,
           2: false,
         },
-        3: {
+        "3rd": {
           0: false,
           1: false,
           2: false,
         },
-        4: {
+        "4th": {
           0: false,
           1: false,
           2: false,
+        },
+        "5th": {
+          0: false,
+          1: false,
+          2: false,
+        },
+        "6th": {
+          0: false,
+          1: false,
+        },
+        "7th": {
+          0: false,
+          1: false,
+        },
+        "8th": {
+          0: false,
+        },
+        "9th": {
+          0: false,
         },
       },
     },
@@ -127,6 +146,7 @@ let store = new Vuex.Store({
       {
         name: "Test Item",
         isMagic: false,
+        isAttuned: false,
         description: "Description for Test Item",
       },
     ],
@@ -190,6 +210,19 @@ let store = new Vuex.Store({
       const { key, newValue } = payload;
       state.combat[key] = newValue;
     },
+    toggleSpellSlot(state, payload) {
+      const { level, slot } = payload;
+      state.class_features.spell_slots[level][slot] =
+        !state.class_features.spell_slots[level][slot];
+    },
+    updateClassFeatureValue(state, payload) {
+      const { feature, key, value } = payload;
+      state.class_features[feature][key] = value;
+    },
+    updateCasterInfoByKey(state, payload) {
+      const { key, value } = payload;
+      state.caster[key] = value;
+    },
   },
   actions: {
     initStore(context) {
@@ -203,6 +236,15 @@ let store = new Vuex.Store({
     },
     updateCombatInfoByKey(context, payload) {
       context.commit("updateCombatInfoByKey", payload);
+    },
+    toggleSpellSlot(context, payload) {
+      context.commit("toggleSpellSlot", payload);
+    },
+    updateClassFeatureValue(context, payload) {
+      context.commit("updateClassFeatureValue", payload);
+    },
+    updateCasterInfoByKey(context, payload) {
+      context.commit("updateCasterInfoByKey", payload);
     },
   },
   modules: {},

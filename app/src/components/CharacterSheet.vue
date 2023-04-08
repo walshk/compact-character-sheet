@@ -20,9 +20,21 @@
           <CasterInfo :editing="editing" />
         </b-row>
         <!-- OPTIONAL SPELLCASTER TRACKING ROWS -->
+        <b-row style="margin-top: 0.5rem" v-if="hasSpellSlots">
+          <SpellSlotsTracker :editing="editing" />
+        </b-row>
+        <b-row style="margin-top: 0.5rem" v-if="hasPactMagic">
+          <PactMagicTracker :editing="editing" />
+        </b-row>
         <b-row style="margin-top: 0.5rem" v-if="hasSorceryPoints">
           <SorcererTracker :editing="editing" />
         </b-row>
+      </b-col>
+      <b-col>
+        <b-tabs pills>
+          <b-tab title="Combat"></b-tab>
+          <b-tab title="Inventory"></b-tab>
+        </b-tabs>
       </b-col>
     </b-row>
   </b-container>
@@ -34,6 +46,8 @@ import CharacterInfo from "@/components/CharacterInfo.vue";
 import CombatInfo from "@/components/CombatInfo.vue";
 import CasterInfo from "@/components/CasterInfo.vue";
 import SorcererTracker from "@/components/class_features/SorcererTracker.vue";
+import PactMagicTracker from "@/components/class_features/PactMagicTracker.vue";
+import SpellSlotsTracker from "@/components/class_features/SpellSlotsTracker.vue";
 
 export default {
   name: "character-sheet",
@@ -43,6 +57,8 @@ export default {
     CombatInfo,
     CasterInfo,
     SorcererTracker,
+    PactMagicTracker,
+    SpellSlotsTracker,
   },
   data() {
     return {
@@ -76,11 +92,25 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .character-sheet {
 }
 
 .section {
   margin-bottom: 0.5rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: black !important;
+  background-color: white;
+}
+
+.nav-link {
+  color: var(--primary-text-color) !important;
+}
+
+.nav-link:hover:not(.nav-link.active) {
+  filter: brightness(75%);
 }
 </style>

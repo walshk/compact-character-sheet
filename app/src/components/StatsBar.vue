@@ -2,16 +2,13 @@
   <b-container fluid class="stats-bar">
     <b-row>
       <b-col class="stat-col" v-for="statKey in statsKeys" :key="statKey">
-        <b-row class="">
+        <b-row @click="toggleCollapse(`collapse-stat`)" class="clickable">
           <b-col></b-col>
           <b-col>
             <h5>{{ statKey.toUpperCase() }}</h5>
           </b-col>
           <b-col>
-            <b-icon-chevron-down
-              @click="toggleCollapse(`collapse-stat`)"
-              class="clickable"
-            />
+            <b-icon-chevron-down />
           </b-col>
         </b-row>
         <b-row>
