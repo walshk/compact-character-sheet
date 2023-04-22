@@ -9,14 +9,25 @@ import { PROFICIENCY } from "@/globals";
 let store = new Vuex.Store({
   state: {
     character_info: {
-      name: "Ensis Caelum",
-      race: "Scourge Aasimar",
-      class: "Sorcerer/Warlock",
-      level: 6,
-      prof_bonus: 3,
-      languages: "Common, Celestial",
+      name: "",
+      race: "",
+      class: "",
+      level: 0,
+      prof_bonus: 0,
+      languages: "",
       proficiencies: "",
-      inspiration: 1,
+      inspiration: 0,
+    },
+    hit_dice: {
+      type: "",
+      used: 0,
+      total: 0,
+    },
+    feats: {
+      0: {
+        name: "Test Feat",
+        description: "Test Feat Description",
+      },
     },
     stats: {
       str: {
@@ -27,7 +38,7 @@ let store = new Vuex.Store({
         },
       },
       dex: {
-        modifier: 2,
+        modifier: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           acrobatics: PROFICIENCY.NOT_PROFICIENT,
@@ -36,13 +47,13 @@ let store = new Vuex.Store({
         },
       },
       con: {
-        modifier: 4,
+        modifier: 0,
         proficiencies: {
           saves: PROFICIENCY.PROFICIENT,
         },
       },
       int: {
-        modifier: 1,
+        modifier: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           arcana: PROFICIENCY.PROFICIENT,
@@ -64,7 +75,7 @@ let store = new Vuex.Store({
         },
       },
       cha: {
-        modifier: 5,
+        modifier: 0,
         proficiencies: {
           saves: PROFICIENCY.PROFICIENT,
           deception: PROFICIENCY.NOT_PROFICIENT,
@@ -75,17 +86,18 @@ let store = new Vuex.Store({
       },
     },
     combat: {
-      armor_class: 19,
-      speed: "30ft",
-      hp_max: 59,
-      hp_current: 55,
-      hp_temp: 12,
+      initiative: 0,
+      armor_class: 0,
+      speed: "0ft",
+      hp_max: 0,
+      hp_current: 0,
+      hp_temp: 0,
       death_save_successes: 0,
       death_save_failures: 0,
       attacks: {
         0: {
           name: "Test Attack",
-          bonus: 9,
+          bonus: 0,
           damage: "1d10+5 force",
         },
       },
@@ -98,20 +110,20 @@ let store = new Vuex.Store({
       },
     },
     caster: {
-      spell_atk: 8,
-      spell_save: 16,
+      spell_atk: 0,
+      spell_save: 0,
       trackers: [],
     },
     class_features: {
       sorcerer: {
-        points_used: 2,
-        points_total: 6,
-        metamagics: "Quicken, Twinned, Subtle",
+        points_used: 0,
+        points_total: 0,
+        metamagics: "",
       },
       pact_magic: {
-        level: 3,
+        level: 0,
         slots_used: 0,
-        slots_total: 2,
+        slots_total: 0,
       },
       spell_slots: {
         "1st": {
@@ -167,7 +179,8 @@ let store = new Vuex.Store({
       0: {
         name: "Test Feature",
         description: "Description for test feature",
-        consumed: false,
+        uses: 0,
+        limited_use: true,
       },
     },
     money: {
@@ -177,6 +190,7 @@ let store = new Vuex.Store({
       gp: 0,
       pp: 0,
     },
+    notes: "",
   },
   getters: {
     characterStats(state) {
@@ -203,6 +217,9 @@ let store = new Vuex.Store({
 
       return stats;
     },
+    stringifiedCharacter(state) {
+      return JSON.stringify(state);
+    },
   },
   mutations: {
     initStore(state) {
@@ -211,6 +228,13 @@ let store = new Vuex.Store({
       if (existingStore) {
         this.replaceState(Object.assign(state, JSON.parse(existingStore)));
       }
+    },
+    importCharacterString(state, payload) {
+      this.replaceState(JSON.parse(payload));
+    },
+    updateCharacterInfoByKey(state, payload) {
+      const { key, value } = payload;
+      state.character_info[key] = value;
     },
     updateStatModifier(state, payload) {
       const { statName, value } = payload;
@@ -224,6 +248,10 @@ let store = new Vuex.Store({
     updateCombatInfoByKey(state, payload) {
       const { key, newValue } = payload;
       state.combat[key] = newValue;
+    },
+    updateHitDiceByKey(state, payload) {
+      const { key, value } = payload;
+      state.hit_dice[key] = value;
     },
     toggleSpellSlot(state, payload) {
       const { level, slot } = payload;
@@ -276,7 +304,7 @@ let store = new Vuex.Store({
       Vue.set(state.combat.spells, newKey, {
         level: 0,
         name: "",
-        ritual: "no",
+        prepared: false,
       });
     },
     deleteSpell(state, index) {
@@ -297,12 +325,34 @@ let store = new Vuex.Store({
 
       Vue.set(state.features, newKey, {
         name: "",
-        consumed: false,
+        uses: 0,
+        limited_use: false,
         description: "",
       });
     },
     deleteFeature(state, index) {
       Vue.delete(state.features, index);
+    },
+    updateFeat(state, payload) {
+      const { index, key, value } = payload;
+      state.feats[index][key] = value;
+    },
+    addNewFeat(state) {
+      const existingKeys = Object.keys(state.feats).map(Number);
+      let newKey = 0;
+      for (let i = 0; i < existingKeys.length; i++) {
+        if (existingKeys[i] == newKey) {
+          newKey += 1;
+        }
+      }
+
+      Vue.set(state.feats, newKey, {
+        name: "",
+        description: "",
+      });
+    },
+    deleteFeat(state, index) {
+      Vue.delete(state.feats, index);
     },
     updateInventory(state, payload) {
       const { index, key, value } = payload;
@@ -330,10 +380,16 @@ let store = new Vuex.Store({
       const { key, value } = payload;
       state.money[key] = value;
     },
+    updateNotes(state, payload) {
+      state.notes = payload;
+    },
   },
   actions: {
     initStore(context) {
       context.commit("initStore");
+    },
+    importCharacterString(context, payload) {
+      context.commit("importCharacterString", payload);
     },
     updateStatModifier(context, payload) {
       context.commit("updateStatModifier", payload);
@@ -341,8 +397,14 @@ let store = new Vuex.Store({
     updateAbilityProficiency(context, payload) {
       context.commit("updateAbilityProficiency", payload);
     },
+    updateCharacterInfoByKey(context, payload) {
+      context.commit("updateCharacterInfoByKey", payload);
+    },
     updateCombatInfoByKey(context, payload) {
       context.commit("updateCombatInfoByKey", payload);
+    },
+    updateHitDiceByKey(context, payload) {
+      context.commit("updateHitDiceByKey", payload);
     },
     toggleSpellSlot(context, payload) {
       context.commit("toggleSpellSlot", payload);
@@ -380,6 +442,15 @@ let store = new Vuex.Store({
     deleteFeature(context, index) {
       context.commit("deleteFeature", index);
     },
+    updateFeat(context, payload) {
+      context.commit("updateFeat", payload);
+    },
+    addNewFeat(context) {
+      context.commit("addNewFeat");
+    },
+    deleteFeat(context, index) {
+      context.commit("deleteFeat", index);
+    },
     updateInventory(context, payload) {
       context.commit("updateInventory", payload);
     },
@@ -391,6 +462,9 @@ let store = new Vuex.Store({
     },
     updateMoney(context, payload) {
       context.commit("updateMoney", payload);
+    },
+    updateNotes(context, payload) {
+      context.commit("updateNotes", payload);
     },
   },
   modules: {},

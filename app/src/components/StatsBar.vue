@@ -106,6 +106,6 @@ export default {
   margin-bottom: 0.5rem;
 }
 .ability-info {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 </style>

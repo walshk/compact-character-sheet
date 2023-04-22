@@ -81,7 +81,17 @@ export default {
     spellUrl() {
       const spellName =
         this.$store.state.combat.spells[this.index].name.toLowerCase();
-      const cleanSpellName = spellName.split(" ").join("-").replaceAll("'", "");
+      const openParenIndex = spellName.indexOf("(");
+      const trimmedSpellName =
+        openParenIndex >= 0
+          ? spellName.slice(0, openParenIndex - 1)
+          : spellName;
+
+      const cleanSpellName = trimmedSpellName
+        .split(" ")
+        .join("-")
+        .replaceAll("'", "")
+        .replaceAll("/", "-");
 
       return `http://dnd5e.wikidot.com/spell:${cleanSpellName}`;
     },

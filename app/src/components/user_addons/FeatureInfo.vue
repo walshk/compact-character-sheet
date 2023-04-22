@@ -6,20 +6,29 @@
         <b-input v-model="featureName"></b-input>
       </b-col>
       <b-col cols="auto" v-else style="text-align: center">
-        <h5 style="margin-bottom: 0">
-          {{ featureName }}{{ featureConsumed ? " (Used)" : "" }}
+        <h5 v-if="featureLimitedUse" style="margin-bottom: 0">
+          {{ featureName }} {{ expended ? " (Used)" : `(${featureUses})` }}
+        </h5>
+        <h5 v-else style="margin-bottom: 0">
+          {{ featureName }}
         </h5>
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
     <b-collapse v-model="showFeature">
-      <b-row>
+      <b-row v-if="featureLimitedUse">
         <b-col style="display: flex">
-          <b-checkbox
-            v-model="featureConsumed"
-            style="margin-right: 0.5rem"
-          ></b-checkbox>
-          Already Used
+          <h5 style="margin-right: 0.5rem">Available Uses:</h5>
+          <b-input
+            v-if="editing"
+            type="number"
+            :min="0"
+            v-model="featureUses"
+            style="width: fit-content"
+          ></b-input>
+          <h5 id="featureCount" v-else :style="featureCountStyle">
+            {{ featureUses }}
+          </h5>
         </b-col>
       </b-row>
       <b-row style="text-align: left; margin-top: 1rem">
@@ -27,9 +36,16 @@
           <b-form-textarea v-model="featureDescription"></b-form-textarea>
         </b-col>
         <b-col v-else>
-          <span>
-            {{ featureDescription }}
-          </span>
+          <span v-html="formattedFeatureDescription"> </span>
+        </b-col>
+      </b-row>
+      <b-row v-if="editing" style="margin-top: 0.5rem">
+        <b-col>
+          <b-form-checkbox
+            v-model="featureLimitedUse"
+            style="margin-right: 0.5rem"
+            >&nbsp;&nbsp;Limited Uses?</b-form-checkbox
+          >
         </b-col>
       </b-row>
       <b-row v-if="editing" style="margin-top: 0.5rem">
@@ -72,14 +88,14 @@ export default {
         });
       },
     },
-    featureConsumed: {
+    featureUses: {
       get() {
-        return this.$store.state.features[this.featureIndex].consumed;
+        return this.$store.state.features[this.featureIndex].uses;
       },
       set(value) {
         this.$store.dispatch("updateFeature", {
           index: this.featureIndex,
-          key: "consumed",
+          key: "uses",
           value,
         });
       },
@@ -96,6 +112,36 @@ export default {
         });
       },
     },
+    featureLimitedUse: {
+      get() {
+        return this.$store.state.features[this.featureIndex].limited_use;
+      },
+      set(value) {
+        this.$store.dispatch("updateFeature", {
+          index: this.featureIndex,
+          key: "limited_use",
+          value,
+        });
+      },
+    },
+    formattedFeatureDescription() {
+      return (
+        "<div>" + this.featureDescription.replaceAll("\n", "<br />") + "</div>"
+      );
+    },
+    featureCountStyle() {
+      if (this.featureUses <= 0) {
+        return {
+          "--feature-uses-color": "var(--bs-danger)",
+        };
+      }
+      return {
+        "--feature-uses-color": "var(--bs-info)",
+      };
+    },
+    expended() {
+      return this.featureLimitedUse ? this.featureUses <= 0 : false;
+    },
   },
 };
 </script>
@@ -108,5 +154,9 @@ export default {
   padding: 0.5rem;
   background-color: var(--foreground-bg-color);
   text-align: center;
+}
+
+#featureCount {
+  color: var(--feature-uses-color);
 }
 </style>

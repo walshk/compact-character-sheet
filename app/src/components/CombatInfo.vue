@@ -14,7 +14,10 @@
             <b-col><h5>Init.</h5></b-col>
           </b-row>
           <b-row>
-            <b-col style="font-size: 1.5rem"
+            <b-col style="font-size: 1.5rem" v-if="editing"
+              ><b-input type="number" v-model="initiative"></b-input
+            ></b-col>
+            <b-col style="font-size: 1.5rem" v-else
               >{{ initiative >= 0 ? "+" : "" }}{{ initiative }}</b-col
             >
           </b-row>
@@ -23,20 +26,22 @@
           <b-row
             ><b-col><h5>Speed</h5></b-col></b-row
           >
-          <b-row
-            ><b-col style="font-size: 1.5rem">{{
-              combatInfo.speed
-            }}</b-col></b-row
-          >
+          <b-row>
+            <b-col v-if="editing" style="font-size: 1.5rem">
+              <b-input v-model="speed"></b-input>
+            </b-col>
+            <b-col v-else style="font-size: 1.5rem">{{ speed }}</b-col>
+          </b-row>
         </b-col>
         <b-col class="combat-section">
           <b-row>
             <b-col><h5>AC</h5></b-col>
           </b-row>
           <b-row>
-            <b-col style="font-size: 1.5rem">{{
-              combatInfo.armor_class
-            }}</b-col>
+            <b-col v-if="editing" style="font-size: 1.5rem">
+              <b-input type="number" v-model="armor_class"></b-input>
+            </b-col>
+            <b-col v-else style="font-size: 1.5rem">{{ armor_class }}</b-col>
           </b-row>
         </b-col>
 
@@ -51,9 +56,10 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col style="font-size: 1.5rem">
-              {{ hpTemp }}
+            <b-col v-if="editing" style="font-size: 1.5rem">
+              <b-input type="number" v-model="hpTemp"></b-input>
             </b-col>
+            <b-col v-else style="font-size: 1.5rem">{{ hpTemp }}</b-col>
           </b-row>
         </b-col>
       </b-row>
@@ -81,8 +87,38 @@ export default {
     combatInfo() {
       return this.$store.state.combat;
     },
-    initiative() {
-      return this.$store.state.stats.dex.modifier;
+    initiative: {
+      get() {
+        return this.$store.state.combat.initiative;
+      },
+      set(value) {
+        this.$store.dispatch("updateCombatInfoByKey", {
+          key: "initiative",
+          newValue: value,
+        });
+      },
+    },
+    speed: {
+      get() {
+        return this.$store.state.combat.speed;
+      },
+      set(value) {
+        this.$store.dispatch("updateCombatInfoByKey", {
+          key: "speed",
+          newValue: value,
+        });
+      },
+    },
+    armor_class: {
+      get() {
+        return this.$store.state.combat.armor_class;
+      },
+      set(value) {
+        this.$store.dispatch("updateCombatInfoByKey", {
+          key: "armor_class",
+          newValue: value,
+        });
+      },
     },
     hpTemp: {
       get() {

@@ -25,9 +25,7 @@
           <b-form-textarea v-model="itemDescription"></b-form-textarea>
         </b-col>
         <b-col v-else>
-          <span>
-            {{ itemDescription }}
-          </span>
+          <span v-html="formattedItemDescription"></span>
         </b-col>
       </b-row>
       <b-row v-if="editing" style="margin-top: 0.5rem">
@@ -93,6 +91,11 @@ export default {
           value,
         });
       },
+    },
+    formattedItemDescription() {
+      return (
+        "<div>" + this.itemDescription.replaceAll("\n", "<br />") + "</div>"
+      );
     },
   },
 };

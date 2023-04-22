@@ -31,4 +31,11 @@ body {
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
 }
+
+.tab-content {
+  height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem 1rem;
+}
 </style>

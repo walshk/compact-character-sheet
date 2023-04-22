@@ -82,7 +82,7 @@ export default {
       set(value) {
         this.$store.dispatch("updateMoney", {
           key: "cp",
-          value,
+          value: Number(value),
         });
       },
     },
@@ -93,7 +93,7 @@ export default {
       set(value) {
         this.$store.dispatch("updateMoney", {
           key: "sp",
-          value,
+          value: Number(value),
         });
       },
     },
@@ -104,7 +104,7 @@ export default {
       set(value) {
         this.$store.dispatch("updateMoney", {
           key: "ep",
-          value,
+          value: Number(value),
         });
       },
     },
@@ -115,7 +115,7 @@ export default {
       set(value) {
         this.$store.dispatch("updateMoney", {
           key: "gp",
-          value,
+          value: Number(value),
         });
       },
     },
@@ -126,18 +126,18 @@ export default {
       set(value) {
         this.$store.dispatch("updateMoney", {
           key: "pp",
-          value,
+          value: Number(value),
         });
       },
     },
     totalValue() {
-      return (
-        10 * Number(this.pp) +
-        Number(this.gp) +
-        0.5 * Number(this.ep) +
-        0.1 * Number(this.sp) +
-        0.01 * Number(this.cp)
-      );
+      const amount =
+        10 * parseInt(this.pp) +
+        parseInt(this.gp) +
+        0.5 * parseInt(this.ep) +
+        0.1 * parseInt(this.sp) +
+        0.01 * parseInt(this.cp);
+      return +parseFloat(amount).toFixed(2);
     },
   },
 };

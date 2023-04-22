@@ -1,23 +1,26 @@
 :root {
-    --primary-bg-color: #202020;
-    --primary-text-color: #FFF;
-    --foreground-bg-color: #303030;
+  --primary-bg-color: #202020;
+  --primary-text-color: #fff;
+  --foreground-bg-color: #303030;
 }
 
 .clickable:hover {
-    cursor: pointer;
-    filter: brightness(75%);
+  cursor: pointer;
+  filter: brightness(75%);
 }
 
 .largeText {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 input {
-    text-align: center;
+  text-align: center;
 }
 
-
+.modal-content {
+  background-color: var(--foreground-bg-color);
+  color: var(--primary-text-color);
+}
 
 /* Scrollbars */
 /* width */
@@ -27,17 +30,17 @@ input {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: white; 
+  background: white;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: darkgrey;
 }
