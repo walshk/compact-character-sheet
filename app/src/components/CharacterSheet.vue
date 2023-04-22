@@ -59,7 +59,28 @@
               </b-col>
             </b-row>
           </b-tab>
-          <b-tab title="Inventory"></b-tab>
+          <b-tab title="Inventory">
+            <b-row
+              style="margin-top: 0.5rem"
+              v-for="itemIndex in inventory"
+              :key="`item-${itemIndex}`"
+            >
+              <InventoryInfo :index="itemIndex" :editing="editing" />
+            </b-row>
+            <b-row
+              v-if="editing"
+              style="text-align: center; margin-top: 0.5rem"
+            >
+              <b-col>
+                <span class="clickable" @click="addNewItem">+ New Item</span>
+              </b-col>
+            </b-row>
+          </b-tab>
+          <b-tab title="Money">
+            <b-row>
+              <MoneyInfo :editing="editing" />
+            </b-row>
+          </b-tab>
         </b-tabs>
       </b-col>
     </b-row>
@@ -77,6 +98,8 @@ import SpellSlotsTracker from "@/components/class_features/SpellSlotsTracker.vue
 import AttacksInfo from "@/components/user_addons/AttacksInfo.vue";
 import SpellsInfo from "@/components/user_addons/SpellsInfo.vue";
 import FeatureInfo from "@/components/user_addons/FeatureInfo.vue";
+import InventoryInfo from "@/components/user_addons/InventoryInfo.vue";
+import MoneyInfo from "@/components/MoneyInfo.vue";
 
 export default {
   name: "character-sheet",
@@ -91,6 +114,8 @@ export default {
     AttacksInfo,
     SpellsInfo,
     FeatureInfo,
+    InventoryInfo,
+    MoneyInfo,
   },
   data() {
     return {
@@ -100,6 +125,9 @@ export default {
   methods: {
     addNewFeature() {
       this.$store.dispatch("addNewFeature");
+    },
+    addNewItem() {
+      this.$store.dispatch("addNewItem");
     },
   },
   computed: {
@@ -129,6 +157,12 @@ export default {
     },
     features() {
       return Object.keys(this.featuresObject);
+    },
+    inventoryObject() {
+      return this.$store.state.inventory;
+    },
+    inventory() {
+      return Object.keys(this.inventoryObject);
     },
   },
 };

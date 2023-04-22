@@ -1,40 +1,38 @@
 <template>
-  <b-col class="feature-info">
-    <b-row class="clickable" @click="showFeature = !showFeature">
+  <b-col class="inventory-info">
+    <b-row class="clickable" @click="showInventory = !showInventory">
       <b-col></b-col>
       <b-col v-if="editing" style="text-align: center">
-        <b-input v-model="featureName"></b-input>
+        <b-input v-model="itemName"></b-input>
       </b-col>
       <b-col cols="auto" v-else style="text-align: center">
-        <h5 style="margin-bottom: 0">
-          {{ featureName }}{{ featureConsumed ? " (Used)" : "" }}
-        </h5>
+        <h5 style="margin-bottom: 0">{{ itemName }}</h5>
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
-    <b-collapse v-model="showFeature">
+    <b-collapse v-model="showInventory">
       <b-row>
         <b-col style="display: flex">
           <b-checkbox
-            v-model="featureConsumed"
+            v-model="itemAttuned"
             style="margin-right: 0.5rem"
           ></b-checkbox>
-          Already Used
+          Attuned
         </b-col>
       </b-row>
       <b-row style="text-align: left; margin-top: 1rem">
         <b-col v-if="editing">
-          <b-form-textarea v-model="featureDescription"></b-form-textarea>
+          <b-form-textarea v-model="itemDescription"></b-form-textarea>
         </b-col>
         <b-col v-else>
           <span>
-            {{ featureDescription }}
+            {{ itemDescription }}
           </span>
         </b-col>
       </b-row>
       <b-row v-if="editing" style="margin-top: 0.5rem">
         <b-col>
-          <b-button @click="deleteFeature">Delete</b-button>
+          <b-button @click="deleteItem">Delete</b-button>
         </b-col>
       </b-row>
     </b-collapse>
@@ -43,55 +41,55 @@
 
 <script>
 export default {
-  name: "feature-info",
+  name: "inventory-info",
   components: {},
   props: {
     editing: Boolean,
-    featureIndex: String,
+    index: String,
   },
   data() {
     return {
-      showFeature: false,
+      showInventory: false,
     };
   },
   methods: {
-    deleteFeature() {
-      this.$store.dispatch("deleteFeature", this.featureIndex);
+    deleteItem() {
+      this.$store.dispatch("deleteInventory", this.index);
     },
   },
   computed: {
-    featureName: {
+    itemName: {
       get() {
-        return this.$store.state.features[this.featureIndex].name;
+        return this.$store.state.inventory[this.index].name;
       },
       set(value) {
-        this.$store.dispatch("updateFeature", {
-          index: this.featureIndex,
+        this.$store.dispatch("updateInventory", {
+          index: this.index,
           key: "name",
           value,
         });
       },
     },
-    featureConsumed: {
+    itemDescription: {
       get() {
-        return this.$store.state.features[this.featureIndex].consumed;
+        return this.$store.state.inventory[this.index].description;
       },
       set(value) {
-        this.$store.dispatch("updateFeature", {
-          index: this.featureIndex,
-          key: "consumed",
+        this.$store.dispatch("updateInventory", {
+          index: this.index,
+          key: "description",
           value,
         });
       },
     },
-    featureDescription: {
+    itemAttuned: {
       get() {
-        return this.$store.state.features[this.featureIndex].description;
+        return this.$store.state.inventory[this.index].attuned;
       },
       set(value) {
-        this.$store.dispatch("updateFeature", {
-          index: this.featureIndex,
-          key: "description",
+        this.$store.dispatch("updateInventory", {
+          index: this.index,
+          key: "attuned",
           value,
         });
       },
@@ -102,7 +100,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.feature-info {
+.inventory-info {
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;

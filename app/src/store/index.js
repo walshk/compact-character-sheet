@@ -156,14 +156,13 @@ let store = new Vuex.Store({
         },
       },
     },
-    inventory: [
-      {
+    inventory: {
+      0: {
         name: "Test Item",
-        isMagic: false,
-        isAttuned: false,
+        attuned: false,
         description: "Description for Test Item",
       },
-    ],
+    },
     features: {
       0: {
         name: "Test Feature",
@@ -173,6 +172,7 @@ let store = new Vuex.Store({
     },
     money: {
       cp: 0,
+      sp: 0,
       ep: 0,
       gp: 0,
       pp: 0,
@@ -304,6 +304,32 @@ let store = new Vuex.Store({
     deleteFeature(state, index) {
       Vue.delete(state.features, index);
     },
+    updateInventory(state, payload) {
+      const { index, key, value } = payload;
+      state.inventory[index][key] = value;
+    },
+    addNewItem(state) {
+      const existingKeys = Object.keys(state.inventory).map(Number);
+      let newKey = 0;
+      for (let i = 0; i < existingKeys.length; i++) {
+        if (existingKeys[i] == newKey) {
+          newKey += 1;
+        }
+      }
+
+      Vue.set(state.inventory, newKey, {
+        name: "",
+        attuned: false,
+        description: "",
+      });
+    },
+    deleteInventory(state, index) {
+      Vue.delete(state.inventory, index);
+    },
+    updateMoney(state, payload) {
+      const { key, value } = payload;
+      state.money[key] = value;
+    },
   },
   actions: {
     initStore(context) {
@@ -353,6 +379,18 @@ let store = new Vuex.Store({
     },
     deleteFeature(context, index) {
       context.commit("deleteFeature", index);
+    },
+    updateInventory(context, payload) {
+      context.commit("updateInventory", payload);
+    },
+    addNewItem(context) {
+      context.commit("addNewItem");
+    },
+    deleteInventory(context, index) {
+      context.commit("deleteInventory", index);
+    },
+    updateMoney(context, payload) {
+      context.commit("updateMoney", payload);
     },
   },
   modules: {},
