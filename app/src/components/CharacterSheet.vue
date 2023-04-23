@@ -90,8 +90,15 @@
         <b-row style="margin-top: 0.5rem">
           <HitDiceTracker :editing="editing" />
         </b-row>
-        <b-row style="margin-top: 0.5rem">
-          <CasterInfo :editing="editing" />
+        <!-- Caster types (for multiple spellcasting ability modifiers) -->
+        <b-row v-if="wisCaster" style="margin-top: 0.5rem">
+          <CasterInfo castingAbility="WIS" :editing="editing" />
+        </b-row>
+        <b-row v-if="intCaster" style="margin-top: 0.5rem">
+          <CasterInfo castingAbility="INT" :editing="editing" />
+        </b-row>
+        <b-row v-if="chaCaster" style="margin-top: 0.5rem">
+          <CasterInfo castingAbility="CHA" :editing="editing" />
         </b-row>
         <!-- OPTIONAL SPELLCASTER TRACKING ROWS -->
         <b-row style="margin-top: 0.5rem" v-if="hasSpellSlots">
@@ -287,7 +294,10 @@ export default {
         this.class.includes("wizard") ||
         this.class.includes("cleric") ||
         this.class.includes("bard") ||
-        this.class.includes("druid")
+        this.class.includes("druid") ||
+        this.class.includes("paladin") ||
+        this.class.includes("arcane trickster") ||
+        this.class.includes("eldritch knight")
       );
     },
     featsObject() {
@@ -318,6 +328,29 @@ export default {
     },
     formattedPlayerNotes() {
       return "<div>" + this.playerNotes.replaceAll("\n", "<br />") + "</div>";
+    },
+    wisCaster() {
+      return (
+        this.class.includes("cleric") ||
+        this.class.includes("druid") ||
+        this.class.includes("monk") ||
+        this.class.includes("ranger")
+      );
+    },
+    intCaster() {
+      return (
+        this.class.includes("wizard") ||
+        this.class.includes("arcane trickster") ||
+        this.class.includes("eldritch knight")
+      );
+    },
+    chaCaster() {
+      return (
+        this.class.includes("bard") ||
+        this.class.includes("sorcerer") ||
+        this.class.includes("warlock") ||
+        this.class.includes("paladin")
+      );
     },
   },
 };
