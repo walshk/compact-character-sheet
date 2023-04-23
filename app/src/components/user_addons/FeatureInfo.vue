@@ -1,5 +1,5 @@
 <template>
-  <b-col class="feature-info">
+  <b-col class="feature-info elevated">
     <b-row class="clickable" @click="showFeature = !showFeature">
       <b-col></b-col>
       <b-col v-if="editing" style="text-align: center">
@@ -149,7 +149,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .feature-info {
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: var(--foreground-bg-color);

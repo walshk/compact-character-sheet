@@ -181,10 +181,10 @@
           </b-tab>
           <b-tab title="Notes">
             <b-row>
-              <b-col class="playerNotes" v-if="editing">
+              <b-col class="playerNotes elevated" v-if="editing">
                 <b-form-textarea v-model="playerNotes"></b-form-textarea>
               </b-col>
-              <b-col class="playerNotes" v-else>
+              <b-col class="playerNotes elevated" v-else>
                 <span v-html="formattedPlayerNotes"> </span>
               </b-col>
             </b-row>
@@ -367,8 +367,10 @@ export default {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: black !important;
-  background-color: white !important;
+  color: var(--primary-text-color) !important;
+  background-color: var(--accent-color) !important;
+  box-shadow: 3.2px 6.4px 6.4px hsl(0deg 0% 0% / 0.4);
+  margin-bottom: 0.5rem;
 }
 
 .nav-link {
@@ -381,7 +383,7 @@ export default {
 
 .playerNotes {
   margin-top: 0.5rem;
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem !important;
   background-color: var(--foreground-bg-color);

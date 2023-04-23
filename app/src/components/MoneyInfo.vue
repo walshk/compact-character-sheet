@@ -1,5 +1,5 @@
 <template>
-  <b-col class="money-info">
+  <b-col class="money-info elevated">
     <b-row>
       <b-col>Platinum</b-col>
       <b-col>
@@ -148,9 +148,9 @@ export default {
 .money-info {
   margin-top: 0.5rem;
   font-size: 1.25rem;
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: var(--foreground-bg-color);
   text-align: center;
 }

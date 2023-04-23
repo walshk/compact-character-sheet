@@ -1,5 +1,5 @@
 <template>
-  <b-col class="sorcerer-tracker">
+  <b-col class="sorcerer-tracker elevated">
     <b-row class="clickable" @click="showSorcery = !showSorcery">
       <b-col></b-col>
       <b-col style="text-align: center">
@@ -119,7 +119,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sorcerer-tracker {
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: var(--foreground-bg-color);

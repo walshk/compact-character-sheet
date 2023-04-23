@@ -1,5 +1,5 @@
 <template>
-  <b-col class="attacks-info">
+  <b-col class="attacks-info elevated">
     <b-row class="clickable" @click="showAttacks = !showAttacks">
       <b-col></b-col>
       <b-col style="text-align: center">
@@ -82,7 +82,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .attacks-info {
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: var(--foreground-bg-color);

@@ -1,12 +1,14 @@
 :root {
-  --primary-bg-color: #202020;
+  --primary-bg-color: linear-gradient(to bottom, #37244c, #5e6c8a);
   --primary-text-color: #fff;
-  --foreground-bg-color: #303030;
+  --foreground-bg-color: #aa647a;
+  --accent-color: #29a9be;
+  --default-border: none;
 }
 
 .clickable:hover {
   cursor: pointer;
-  filter: brightness(75%);
+  color: #37244c;
 }
 
 .largeText {
@@ -20,6 +22,10 @@ input {
 .modal-content {
   background-color: var(--foreground-bg-color);
   color: var(--primary-text-color);
+}
+
+.elevated {
+  box-shadow: 2.2px 4.3px 4.3px hsl(0deg 0% 0% / 0.43);
 }
 
 /* Scrollbars */

@@ -1,7 +1,11 @@
 <template>
   <b-container fluid class="stats-bar">
     <b-row>
-      <b-col class="stat-col" v-for="statKey in statsKeys" :key="statKey">
+      <b-col
+        class="stat-col elevated"
+        v-for="statKey in statsKeys"
+        :key="statKey"
+      >
         <b-row @click="toggleCollapse(`collapse-stat`)" class="clickable">
           <b-col></b-col>
           <b-col>
@@ -96,7 +100,7 @@ export default {
 
 .stat-col {
   background-color: var(--foreground-bg-color);
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 1rem;
   padding: 0.5rem 0.5rem;
   margin: 0.2rem;

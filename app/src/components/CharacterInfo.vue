@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="character-info">
     <b-row>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Name</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input v-model="charName"></b-form-input>
@@ -10,7 +10,7 @@
           <h5>{{ charName }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Class</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input v-model="charClass"></b-form-input>
@@ -19,7 +19,7 @@
           <h5>{{ charClass }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Level</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input
@@ -32,7 +32,7 @@
           <h5>{{ charLevel }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Proficiency Bonus</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input
@@ -45,7 +45,7 @@
           <h5>+{{ charProfBonus }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Inspiration</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input
@@ -58,13 +58,13 @@
           <h5>{{ charInspiration }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Passive Perception</h5>
         <div>
           <h5>{{ passivePerception }}</h5>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Proficiencies</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input v-model="charProficiencies"></b-form-input>
@@ -73,7 +73,7 @@
           <span class="smallText">{{ charProficiencies }}</span>
         </div>
       </b-col>
-      <b-col class="highlight-info">
+      <b-col class="highlight-info elevated">
         <h5>Languages</h5>
         <div v-if="editing" style="margin-bottom: 0.5rem">
           <b-form-input v-model="charLanguages"></b-form-input>
@@ -206,7 +206,7 @@ export default {
   background-color: var(--foreground-bg-color);
   margin: 0.5rem 1rem;
   padding-top: 0.5rem;
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 1rem;
 }
 

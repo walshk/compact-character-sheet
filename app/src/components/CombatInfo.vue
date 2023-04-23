@@ -1,9 +1,9 @@
 <template>
-  <b-col class="combat-info">
+  <b-col class="combat-info elevated">
     <b-row class="clickable" @click="showCombatInfo = !showCombatInfo">
       <b-col></b-col>
       <b-col style="text-align: center">
-        <h5 style="margin-bottom: 0">Combat</h5>
+        <h5 style="margin-bottom: 0">Combat & Health</h5>
       </b-col>
       <b-col style="text-align: right"><b-icon-chevron-down /></b-col>
     </b-row>
@@ -138,7 +138,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .combat-info {
-  border: 1px solid black;
+  border: var(--default-border);
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: var(--foreground-bg-color);
