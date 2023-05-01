@@ -227,6 +227,9 @@ let store = new Vuex.Store({
 
       if (existingStore) {
         this.replaceState(Object.assign(state, JSON.parse(existingStore)));
+        if (state.character_info.name !== "") {
+          document.title = state.character_info.name;
+        }
       }
     },
     importCharacterString(state, payload) {
@@ -472,6 +475,11 @@ let store = new Vuex.Store({
 
 store.subscribe((mutation, state) => {
   localStorage.setItem("characterState", JSON.stringify(state));
+  if (mutation === "updateCharacterInfoByKey") {
+    if (state.character_info.name !== "") {
+      document.title = state.character_info.name;
+    }
+  }
 });
 
 export default store;
