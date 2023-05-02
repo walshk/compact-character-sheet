@@ -31,14 +31,14 @@ let store = new Vuex.Store({
     },
     stats: {
       str: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           athletics: PROFICIENCY.NOT_PROFICIENT,
         },
       },
       dex: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           acrobatics: PROFICIENCY.NOT_PROFICIENT,
@@ -47,13 +47,13 @@ let store = new Vuex.Store({
         },
       },
       con: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.PROFICIENT,
         },
       },
       int: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           arcana: PROFICIENCY.PROFICIENT,
@@ -64,7 +64,7 @@ let store = new Vuex.Store({
         },
       },
       wis: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.NOT_PROFICIENT,
           animal_handling: PROFICIENCY.NOT_PROFICIENT,
@@ -75,7 +75,7 @@ let store = new Vuex.Store({
         },
       },
       cha: {
-        modifier: 0,
+        score: 0,
         proficiencies: {
           saves: PROFICIENCY.PROFICIENT,
           deception: PROFICIENCY.NOT_PROFICIENT,
@@ -199,7 +199,8 @@ let store = new Vuex.Store({
 
       const stat_names = Object.keys(stats);
       for (let i = 0; i < stat_names.length; i++) {
-        const mod = stats[stat_names[i]].modifier;
+        const score = stats[stat_names[i]].score;
+        const mod = Math.floor((score - 10) / 2);
         Object.keys(stats[stat_names[i]].proficiencies).forEach((key) => {
           switch (stats[stat_names[i]].proficiencies[key]) {
             case PROFICIENCY.PROFICIENT:
@@ -216,6 +217,17 @@ let store = new Vuex.Store({
       }
 
       return stats;
+    },
+    abilityModifiers(state) {
+      const modifiers = {};
+
+      Object.keys(state.stats).forEach((statKey) => {
+        const score = state.stats[statKey].score;
+        const mod = Math.floor((score - 10) / 2);
+        modifiers[statKey] = mod;
+      });
+
+      return modifiers;
     },
     stringifiedCharacter(state) {
       return JSON.stringify(state);
@@ -239,10 +251,10 @@ let store = new Vuex.Store({
       const { key, value } = payload;
       state.character_info[key] = value;
     },
-    updateStatModifier(state, payload) {
+    updateAbilityScore(state, payload) {
       const { statName, value } = payload;
 
-      state.stats[statName].modifier = value;
+      state.stats[statName].score = value;
     },
     updateAbilityProficiency(state, payload) {
       const { statName, abilityName, value } = payload;
@@ -394,8 +406,8 @@ let store = new Vuex.Store({
     importCharacterString(context, payload) {
       context.commit("importCharacterString", payload);
     },
-    updateStatModifier(context, payload) {
-      context.commit("updateStatModifier", payload);
+    updateAbilityScore(context, payload) {
+      context.commit("updateAbilityScore", payload);
     },
     updateAbilityProficiency(context, payload) {
       context.commit("updateAbilityProficiency", payload);

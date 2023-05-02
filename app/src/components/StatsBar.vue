@@ -19,14 +19,13 @@
           <b-col v-if="editing">
             <b-input
               type="number"
-              :value="stats[statKey].modifier"
-              @input="(newValue) => updateModifier(statKey, newValue)"
+              :value="stats[statKey].score"
+              @input="(newValue) => updateAbilityScore(statKey, newValue)"
               style="text-align: center"
             ></b-input>
           </b-col>
           <b-col v-else class="stat-modifier">
-            {{ stats[statKey].modifier >= 0 ? "+" : ""
-            }}{{ stats[statKey].modifier }}
+            {{ modifiers[statKey] >= 0 ? "+" : "" }}{{ modifiers[statKey] }}
           </b-col>
         </b-row>
         <b-collapse id="collapse-stat">
@@ -74,8 +73,8 @@ export default {
         value,
       });
     },
-    updateModifier(statName, value) {
-      this.$store.dispatch("updateStatModifier", {
+    updateAbilityScore(statName, value) {
+      this.$store.dispatch("updateAbilityScore", {
         statName,
         value: Number(value),
       });
@@ -87,6 +86,9 @@ export default {
   computed: {
     statsKeys() {
       return Object.keys(this.stats);
+    },
+    modifiers() {
+      return this.$store.getters.abilityModifiers;
     },
   },
 };

@@ -179,7 +179,7 @@ export default {
       },
     },
     passivePerception() {
-      const wisdomMod = this.$store.state.stats.wis.modifier;
+      const wisdomMod = this.$store.getters.abilityModifiers.wis;
       const proficiency = this.$store.state.stats.wis.proficiencies.perception;
       const profBonus = this.charProfBonus;
 

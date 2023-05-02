@@ -132,11 +132,11 @@ export default {
     featureCountStyle() {
       if (this.featureUses <= 0) {
         return {
-          "--feature-uses-color": "var(--bs-danger)",
+          "--feature-uses-color": "var(--bs-warning)",
         };
       }
       return {
-        "--feature-uses-color": "var(--bs-info)",
+        "--feature-uses-color": "var(--bs-cyan)",
       };
     },
     expended() {
